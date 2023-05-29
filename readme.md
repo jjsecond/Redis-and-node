@@ -1,32 +1,7 @@
-# global variable
-
-can set global variables in node
-
-`gloabl.luckyNum` = '23'
-
-process is a powerful global object that we can access in node
-
-`console.log(process.platform)`
-
-pass events and callbacks
-
-// can listen to an event called exit then use the callback function to execute some logic
-// this event is built into node
-process.on('exit' , function(){
-
-})
-
-can create custom event emitters
 
 
 
-// create a default package.json
-
- npm init -y
- npm 
-
-
- // start local redis server
+# start local redis server
 
 to start local instance on default port of 6379, leave running in another terminal
  redis-server
