@@ -1,25 +1,24 @@
 const getOrSetCache = async (key, redisClient, requestDataFn) => {
-  return new Promise(async (resolve, reject) => {
-    await redisClient.get(key, async (error, data) => {
-      // returns cached data
-      if (data != null){ 
-        console.log('cache hit')
-        return resolve(JSON.parse(data))};
+    const cachedData = await redisClient.get(key);
+    // returns cached data
+    if (cachedData != null) {
+      console.log("cache hit");
+      return JSON.parse(cachedData);
+    }
+  
+    // is a callback of the axios query
+    const freshData = await requestDataFn();
+  
+    // set an expiration time on all our photos, data needs to be stringified to store in redis
+    const defaultExpiration = 3600;
+  
+    // adds data to cache
+    await redisClient.setEx(key, defaultExpiration, JSON.stringify(freshData));
+  
+    console.log("cache miss");
+    // returns data from the request not the cache
+    return freshData;
+  };
 
-      const freshData = await requestDataFn();
-
-      const defaultExpiration = 3600;
-
-      // adds data to cache
-      await redisClient.setEx(
-        key,
-        defaultExpiration,
-        JSON.stringify(freshData)
-      );
-
-      console.log('cache miss')
-      resolve(freshData);
-    });
-  });
-};
+  module.exports = getOrSetCache;
 
