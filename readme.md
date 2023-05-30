@@ -1,58 +1,56 @@
-# global variable
+# What is this repo
 
-can set global variables in node
-
-`gloabl.luckyNum` = '23'
-
-process is a powerful global object that we can access in node
-
-`console.log(process.platform)`
-
-pass events and callbacks
-
-// can listen to an event called exit then use the callback function to execute some logic
-// this event is built into node
-process.on('exit' , function(){
-
-})
-
-can create custom event emitters
+A quick example how to use a redis server locally with a node api for caching responses from another api.
 
 
 
-// create a default package.json
+# start local redis server
 
- npm init -y
- npm 
+- to start local instance on default port of 6379, leave running in another terminal
+ `redis-server`
 
-
- // start local redis server
-
-to start local instance on default port of 6379, leave running in another terminal
- redis-server
-
-to access and communicate with the Redis instance:
-redis-cli
-
-see all keys in instance:
-keys *
-
-// return all values in key
-GET photos 
+- to access and communicate with the Redis instance:
+`redis-cli`
 
 
+## Useful Redis cli commands
+- see all keys in instance:
+`keys *`
 
-example routes:
+- return all values in key
+`GET <keyname>` 
 
-http://localhost:3000/albums?albumId=5
-// will return all photos which belong to album 5
+- flush the cache:
+`flushall`
+
+
+- start the api:
+`npm i`
+`npm run start`
+
+
+## example routes:
+
+### will return all photos which belong to album 5
+
+endpoint: `http://localhost:3000/albums?albumId=5`
 it will save a kv to redis as : `"photos?albumId=4"`
 
-http://localhost:3000/photo/9
-// return a single photo by id
-// it will save a kv to redis as `"photos?id=9"`
+### return a single photo by id
 
-http://localhost:3000/photos
-// return all photos
+endpoint: `http://localhost:3000/photo/9`
+it will save a kv to redis as `"photos?id=9"`
+
+### return all photos
+
+endpoint: `http://localhost:3000/photos`
 it will save a kv to redis as `"photos"`
+
+
+## Useful tutorials
+
+1. What is redis: `https://www.youtube.com/watch?v=64VG179N4no&list=PLS1QulWo1RIYZZxQdap7Sd0ARKFI-XVsd`
+
+2. How to work with redis and what this project is based on: `https://www.youtube.com/watch?v=jgpVdJB2sKQ`
+
 
